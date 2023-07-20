@@ -1,4 +1,6 @@
 const winston = require('winston');
+const twilio = require('twilio');
+const nodemailer = require('nodemailer');
 
 // Configure winston logger with console and file transports
 const logger = winston.createLogger({
@@ -20,4 +22,6 @@ function logError(message) {
   logger.error(message);
 }
 
-module.exports = logError;
+
+
+module.exports = {logError, sendMobileNotification, sendEmailNotification};

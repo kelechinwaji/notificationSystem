@@ -31,16 +31,6 @@ npm start
 
 The server will start running on `http://localhost:3000`.
 
-### Triggering a Notification
-
-To trigger a notification, make a POST request to `http://localhost:3000/api/trigger-notification` with the following JSON data in the request body:
-
-```json
-{
-  "userId": "user123",
-  "amount": 100,
-  "notificationType": "email"
-}
 
 Implementation Details
 The application is structured as follows:
@@ -65,4 +55,4 @@ Environment Variables: Sensitive information, such as Twilio credentials and ema
 Logging: The application logs errors using Winston to facilitate easy debugging and monitoring.
 
 Note:
-This application is a simplified example intended to demonstrate the logic and implementation for an automated deposit notification system. The instances and data used are based on assumptions specific to this use case. 
+This application is a simplified example intended to demonstrate the logic and implementation for an automated deposit notification system. The instances and data used are based on assumptions specific to this use case.

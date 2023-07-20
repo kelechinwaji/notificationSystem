@@ -43,7 +43,8 @@ To trigger a notification, make a POST request to `http://localhost:3000/api/tri
 }
 ```
 
-Implementation Details
+### Implementation Details
+
 The application is structured as follows:
 
 * app.js: This is the main file where the Express server is created, It handles incoming HTTP requests.

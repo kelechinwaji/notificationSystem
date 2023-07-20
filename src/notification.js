@@ -14,7 +14,19 @@ async function fetchUserInformation(userId) {
     }
   }
   
-
+  // Helper function to fetch user wallet information using a fake User Wallet microservice API
+  async function fetchUserWallet(userId) {
+    // Code to fetch user wallet information using Axios
+   
+    try {
+      const user = await fetchUserInformation(userId);
+      const response = await axios.get(`http://xend-wallet-service/api/wallets/${user.walletId}`);
+      return response.data;
+    } catch (error) {
+      logError(`Error fetching user wallet for userID: ${userId}. Error: ${error.message}`);
+      throw new Error('Failed to fetch user wallet information.');
+    }
+  }
   
   
   

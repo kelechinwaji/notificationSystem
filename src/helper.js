@@ -2,16 +2,16 @@ const winston = require('winston');
 const twilio = require('twilio');
 const nodemailer = require('nodemailer');
 
-// Configure winston logger with console and file transports
+// winston logger configuration
 const logger = winston.createLogger({
   level: 'error', // Log only errors and above
   format: winston.format.json(), // Log data in JSON format
-  defaultMeta: { service: 'your-service-name' }, 
+  defaultMeta: { service: 'service-name' },
   transports: [
     // Log errors to the console
     new winston.transports.Console(),
 
-    // Log errors to a file 
+    // Log errors to a file
     new winston.transports.File({ filename: 'error.log', level: 'error' }),
   ],
 });
@@ -22,22 +22,22 @@ function logError(message) {
   logger.error(message);
 }
 
+// Configure Twilio
+const twilioConfig = {
+  accountSid: process.env.TWILIO_ACCOUNT_SID,
+  authToken: process.env.TWILIO_AUTH_TOKEN,
+  fromPhoneNumber: process.env.YOUR_TWILIO_PHONE_NUMBER,
+};
+
 // Helper function to send mobile notification
 async function sendMobileNotification(user, message) {
-  // Code to send mobile notification
-  // Use Twilio to send SMS notifications
-  // Replace YOUR_TWILIO_ACCOUNT_SID, YOUR_TWILIO_AUTH_TOKEN, and YOUR_TWILIO_PHONE_NUMBER with your Twilio credentials
-  const accountSid = 'YOUR_TWILIO_ACCOUNT_SID';
-  const authToken = 'YOUR_TWILIO_AUTH_TOKEN';
-  const client = twilio(accountSid, authToken);
-
-  const mobileNumber = user.mobile; // Assuming user.mobile contains the user's mobile number
+  const client = twilio(twilioConfig.accountSid, twilioConfig.authToken);
 
   try {
     const notification = await client.messages.create({
       body: message,
-      from: 'YOUR_TWILIO_PHONE_NUMBER', // Replace with your Twilio phone number
-      to: mobileNumber,
+      from: twilioConfig.fromPhoneNumber,
+      to: user.mobile, // Assuming user.mobile contains the user's mobile number
     });
 
     console.log('Mobile notification sent:', notification.sid);
@@ -46,29 +46,29 @@ async function sendMobileNotification(user, message) {
   }
 }
 
+// Configure Nodemailer
+const nodemailerConfig = {
+  fromEmail: process.env.FROM_EMAIL,
+  transporter: nodemailer.createTransport({
+    // Configure the email transport options (e.g., SMTP settings)
+  }),
+};
+
 // Helper function to send email notification
 async function sendEmailNotification(user, message) {
-  // Code to send email notification
-  // Use Nodemailer to send email notifications
-  // Replace your_email@example.com with your email address
-  const transporter = nodemailer.createTransport({
-    // Configure the email transport options (e.g., SMTP settings)
-  });
-
   const mailOptions = {
-    from: 'your_email@example.com',
+    from: nodemailerConfig.fromEmail,
     to: user.email,
     subject: 'Failed Automated Deposit',
     text: message,
   };
 
   try {
-    await transporter.sendMail(mailOptions);
+    await nodemailerConfig.transporter.sendMail(mailOptions);
     console.log('Email notification sent to:', user.email);
   } catch (error) {
     logError('Error sending email notification:', error.message);
   }
 }
 
-
-module.exports = {logError, sendMobileNotification, sendEmailNotification};
+module.exports = { logError, sendMobileNotification, sendEmailNotification };

@@ -30,6 +30,27 @@ async function fetchUserInformation(userId) {
   
   
   
-
+  // Function to handle the notification process
+  async function handleFailedDepositNotification(userId, amount, notificationType) {
+    try {
+      const user = await fetchUserInformation(userId);
+      const wallet = await fetchUserWallet(userId);
+  
+      // Check if the user's wallet balance is insufficient
+      if (wallet.balance < amount) {
+        // message to inform a user
+        const message = `Dear ${user.name}, your automated deposit of ${amount} failed due to insufficient funds in your wallet. Please add funds to your wallet to resolve the issue.`;
+  
+        // Send notification based on the notification type
+        if (notificationType === 'mobile') {
+          await sendMobileNotification(user, message);
+        } else if (notificationType === 'email') {
+          await sendEmailNotification(user, message);
+        }
+      }
+    } catch (error) {
+      logError(error.message);
+    }
+  }
 
 module.exports = handleFailedDepositNotification;

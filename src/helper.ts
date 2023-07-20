@@ -22,6 +22,31 @@ function logError(message) {
   logger.error(message);
 }
 
+// Helper function to send email notification
+async function sendEmailNotification(user, message) {
+  // Code to send email notification
+  // Use Nodemailer to send email notifications
+  // Replace your_email@example.com with your email address
+  const transporter = nodemailer.createTransport({
+    // Configure the email transport options (e.g., SMTP settings)
+  });
+
+  const mailOptions = {
+    from: 'your_email@example.com',
+    to: user.email,
+    subject: 'Failed Automated Deposit',
+    text: message,
+  };
+
+  try {
+    await transporter.sendMail(mailOptions);
+    console.log('Email notification sent to:', user.email);
+  } catch (error) {
+    logError('Error sending email notification:', error.message);
+  }
+}
+
+
 
 
 module.exports = {logError, sendMobileNotification, sendEmailNotification};

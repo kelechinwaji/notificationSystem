@@ -29,7 +29,7 @@ const twilioConfig = {
   fromPhoneNumber: process.env.YOUR_TWILIO_PHONE_NUMBER,
 };
 
-// Helper function to send mobile notification
+// function to send mobile notification
 async function sendMobileNotification(user, message) {
   const client = twilio(twilioConfig.accountSid, twilioConfig.authToken);
 
@@ -54,7 +54,7 @@ const nodemailerConfig = {
   }),
 };
 
-// Helper function to send email notification
+// function to send email notification
 async function sendEmailNotification(user, message) {
   const mailOptions = {
     from: nodemailerConfig.fromEmail,

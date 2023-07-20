@@ -1,7 +1,7 @@
 // Import helper functions to send email, sms and log errors
 const {sendEmailNotification, logError, sendMobileNotification} = require('./helper');
 
-// Helper function to fetch user information using a fake User Service API
+// fetchs user information using a fake User Service API
 async function fetchUserInformation(userId) {
     // Code to fetch user information using Axios
     
@@ -14,7 +14,7 @@ async function fetchUserInformation(userId) {
     }
   }
   
-  // Helper function to fetch user wallet information using a fake User Wallet microservice API
+  // fetchs user wallet information using a fake User Wallet microservice API
   async function fetchUserWallet(userId) {
     // Code to fetch user wallet information using Axios
    

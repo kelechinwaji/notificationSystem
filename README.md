@@ -31,6 +31,17 @@ npm start
 
 The server will start running on `http://localhost:3000`.
 
+### Triggering a Notification
+
+To trigger a notification, make a POST request to `http://localhost:3000/api/trigger-notification` with the following JSON data in the request body:
+
+```json
+{
+  "userId": "user123",
+  "amount": 100,
+  "notificationType": "email"
+}
+```
 
 Implementation Details
 The application is structured as follows:

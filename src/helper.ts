@@ -22,6 +22,30 @@ function logError(message) {
   logger.error(message);
 }
 
+// Helper function to send mobile notification
+async function sendMobileNotification(user, message) {
+  // Code to send mobile notification
+  // Use Twilio to send SMS notifications
+  // Replace YOUR_TWILIO_ACCOUNT_SID, YOUR_TWILIO_AUTH_TOKEN, and YOUR_TWILIO_PHONE_NUMBER with your Twilio credentials
+  const accountSid = 'YOUR_TWILIO_ACCOUNT_SID';
+  const authToken = 'YOUR_TWILIO_AUTH_TOKEN';
+  const client = twilio(accountSid, authToken);
+
+  const mobileNumber = user.mobile; // Assuming user.mobile contains the user's mobile number
+
+  try {
+    const notification = await client.messages.create({
+      body: message,
+      from: 'YOUR_TWILIO_PHONE_NUMBER', // Replace with your Twilio phone number
+      to: mobileNumber,
+    });
+
+    console.log('Mobile notification sent:', notification.sid);
+  } catch (error) {
+    logError('Error sending mobile notification:', error.message);
+  }
+}
+
 // Helper function to send email notification
 async function sendEmailNotification(user, message) {
   // Code to send email notification
@@ -45,8 +69,6 @@ async function sendEmailNotification(user, message) {
     logError('Error sending email notification:', error.message);
   }
 }
-
-
 
 
 module.exports = {logError, sendMobileNotification, sendEmailNotification};

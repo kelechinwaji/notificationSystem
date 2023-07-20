@@ -51,9 +51,7 @@ The application is structured as follows:
 
 * notification.js: This file fetches user information from the User Management Service, checks the wallet balance using the User Wallet microservice, and sends notifications via SMS or email based on the specified notificationType.
 
-sendEmailNotification.js: This is a separate module that contains the sendEmailNotification function, which uses Nodemailer to send email notifications to users.
-
-logger.js: This is another separate module that contains the logError function. It uses Winston to log errors to both the console and a file.
+helper.js: This is a separate module that contains the sendEmailNotification function, which uses Nodemailer to send email notifications to users, it also contains logError function which uses Winston to log errors to both the console and a file.
 
 The application uses the body-parser middleware to parse JSON and URL-encoded data in the request body. It also employs environment variables to securely store sensitive information like Twilio credentials and email addresses.
 
